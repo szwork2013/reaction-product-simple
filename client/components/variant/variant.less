@@ -1,0 +1,111 @@
+@import "{reactioncommerce:reaction-ui}/client/styles/variables.less";
+@import "{reactioncommerce:reaction-ui}/client/styles/mixins.less";
+@import "{reactioncommerce:reaction-ui}/client/styles/rtl.less";
+
+
+.simple-variant {
+  display: flex;
+}
+
+.simple-variant:hover {
+  border: 3px solid gray;
+  background-color: @white;
+}
+
+.simple-variant.selected {
+  border: 2px solid @state-active-color;
+  border-radius: @border-radius-large;
+  // background-color: ;
+}
+
+.simple-variant .media {
+  flex: 1 1 auto;
+  max-width: 100px;
+  padding: 5px;
+
+  img {
+    width: 100%;
+  }
+}
+
+.simple-variant .detail {
+  flex: 1 1 auto;
+  padding: 5px;
+}
+
+.variant-detail{
+  height: 34px;
+  border-radius: @input-border-radius;
+  font-size: 12px;
+  border: 3px solid transparent;
+  margin-top: 8px;
+  background-color: #ff00ff
+}
+
+
+.variant-progress-item {
+  border: 0px;
+  position: absolute;
+  padding-left: 10px;
+  padding-right: 10px;
+  width: 100%;
+}
+
+.variant-qty-sold-out {
+  text-transform:uppercase;
+  border-radius:1px;
+}
+
+.variant-table {
+  .edit, .buy {
+    .text-align(right);
+  }
+}
+
+.variant-title {
+  position: absolute;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: clip;
+  display: inline-block;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  .margin-left(5px);
+  line-height: 28px;
+  font-weight: 400;
+  color: @btn-default-color;
+  width: 80%;
+}
+
+.variant-price {
+  display: inline-block;
+  .margin-left(10px);
+  font-size: medium;
+  font-weight: 500;
+  line-height: 30px;
+  color: @btn-default-color;
+  position: absolute;
+  .right(10px);
+}
+
+.variant-edit {
+  background-color: @black;
+  color: @link-color;
+  position: absolute;
+  border-radius: @input-border-radius;
+  .right(0);
+  padding: 5px;
+}
+.variant-product-options {
+  padding: 6px;
+  border: 1px solid @gray-lighter;
+  border-radius: @list-group-border-radius;
+  margin: 2px 0px 8px 0px;
+}
+
+@media only screen and (max-width: @screen-sm-max) {
+  .variant-title {
+    letter-spacing: 0em;
+    width: 70%;
+  }
+}
