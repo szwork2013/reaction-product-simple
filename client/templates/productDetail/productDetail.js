@@ -2,6 +2,11 @@
  * productDetail helpers
  */
 Template.productDetail.helpers({
+  // Return React component
+  ProductDetail() {
+    return ProductDetail
+  },
+
   tags: function () {
     let product = selectedProduct();
     if (product) {

@@ -49,9 +49,15 @@ Package.onUse(function (api) {
 
   // api.addFiles("client/templates/productGrid/productGrid.html", "client");
   // api.addFiles("client/templates/productGrid/productGrid.js", "client");
+  //
+  api.addFiles("client/helpers/product.js", "client");
+
+  api.addFiles("client/components/media/media.jsx", "client");
+
 
   api.addFiles("client/templates/productDetail/productDetail.html", "client");
   api.addFiles("client/templates/productDetail/productDetail.js", "client");
+  api.addFiles("client/templates/productDetail/productDetail.jsx", "client");
 
   api.addFiles("client/templates/productDetail/settings/settings.html", "client");
   api.addFiles("client/templates/productDetail/settings/settings.js", "client");
@@ -75,6 +81,7 @@ Package.onUse(function (api) {
 
   api.addFiles("client/templates/productDetail/variants/variantList/variantList.html", "client");
   api.addFiles("client/templates/productDetail/variants/variantList/variantList.js", "client");
+  api.addFiles("client/components/variantSelector/variantSelector.jsx", "client");
 
   api.addFiles("client/templates/productDetail/variants/variantForm/variantForm.html", "client");
   api.addFiles("client/templates/productDetail/variants/variantForm/variantForm.js", "client");
@@ -90,4 +97,6 @@ Package.onUse(function (api) {
 
   api.addFiles("client/templates/productSettings/productSettings.html", "client");
   api.addFiles("client/templates/productSettings/productSettings.js", "client");
+
+  api.export("ReactionSimpleProduct");
 });
