@@ -42,7 +42,7 @@ ProductDetail = React.createClass({
     const editable = this.data.editable;
 
     return (
-      <div className="productDetail" itemScope itemType="http://schema.org/Product">
+      <div className="rui productDetail" itemScope itemType="http://schema.org/Product">
 
 
         <div className="header">
@@ -56,7 +56,11 @@ ProductDetail = React.createClass({
 
         <div className="column">
           {this.renderMediaGallery()}
-          <Tags tags={this.data.tags}></Tags>
+
+          <h3>Tags</h3>
+          <Tags tags={this.data.tags} editable={editable}></Tags>
+
+          <h3>Details</h3>
           <Metadata metafields={product.metafields} editable={editable}></Metadata>
         </div>
 

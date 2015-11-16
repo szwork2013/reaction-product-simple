@@ -58,6 +58,7 @@ Package.onUse(function (api) {
   api.addFiles("client/templates/productDetail/productDetail.html", "client");
   api.addFiles("client/templates/productDetail/productDetail.js", "client");
   api.addFiles("client/templates/productDetail/productDetail.jsx", "client");
+  api.addFiles("client/templates/productDetail/productDetail.less", "client");
 
   api.addFiles("client/templates/productDetail/settings/settings.html", "client");
   api.addFiles("client/templates/productDetail/settings/settings.js", "client");
