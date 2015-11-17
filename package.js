@@ -1,5 +1,5 @@
 Package.describe({
-  summary: "Reaction Simple Product",
+  summary: "Reaction Product - Simple",
   name: "reactioncommerce:reaction-product-simple",
   version: "0.1.0",
   git: "https://github.com/reactioncommerce/reaction-product-simple.git"
@@ -52,13 +52,13 @@ Package.onUse(function (api) {
   //
   api.addFiles("client/helpers/product.js", "client");
 
+
+  api.addFiles("client/components/components.jsx", "client");
+  api.export("ReactionProductSimple");
+
   api.addFiles("client/components/media/media.jsx", "client");
 
 
-  api.addFiles("client/templates/productDetail/productDetail.html", "client");
-  api.addFiles("client/templates/productDetail/productDetail.js", "client");
-  api.addFiles("client/templates/productDetail/productDetail.jsx", "client");
-  api.addFiles("client/templates/productDetail/productDetail.less", "client");
 
   api.addFiles("client/templates/productDetail/settings/settings.html", "client");
   api.addFiles("client/templates/productDetail/settings/settings.js", "client");
@@ -98,6 +98,13 @@ Package.onUse(function (api) {
 
   api.addFiles("client/templates/productSettings/productSettings.html", "client");
   api.addFiles("client/templates/productSettings/productSettings.js", "client");
+
+
+  api.addFiles("client/templates/productDetail/productDetail.html", "client");
+  api.addFiles("client/templates/productDetail/productDetail.js", "client");
+  api.addFiles("client/templates/productDetail/productDetail.jsx", "client");
+  api.addFiles("client/templates/productDetail/productDetail.less", "client");
+
 
   api.export("ReactionSimpleProduct");
 });

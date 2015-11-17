@@ -1,5 +1,6 @@
 
-VariantSelector = class VariantSelector extends React.Component {
+class VariantSelector extends React.Component {
+  diplsyName: "Variant Selector"
 
   props = {
     variants: []
@@ -18,8 +19,10 @@ VariantSelector = class VariantSelector extends React.Component {
       </div>
     );
   }
-};
+}
 
 VariantSelector.propTypes = {
   variants: React.PropTypes.array.isRequired
 };
+
+ReactionProductSimple.Components.VariantSelector = VariantSelector;

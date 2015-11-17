@@ -4,14 +4,20 @@
 // TODO: For now lets pretend we have to do imports
 const Tags = ReactionUI.Components.Tags;
 const TextField = ReactionUI.Components.TextField;
-
+const Items = ReactionUI.Components.Items;
+const VariantSelector = ReactionProductSimple.Components.VariantSelector;
+console.log("Variant Selector");
 ProductDetail = React.createClass({
+  displayName: "Product Detail - Simple",
+
   mixins: [ReactMeteorData],
 
   getMeteorData() {
+    let data = {};
     const handle = Meteor.subscribe("Product", Router.current().params._id);
 
-    return {
+    data = {
+      isLoadingProduct: handle.ready(),
       product: selectedProduct(),
       tags: ReactionSimpleProduct.tags,
       media: ReactionCore.Media.getProductMedia(),
@@ -19,11 +25,43 @@ ProductDetail = React.createClass({
       childVariants: ReactionSimpleProduct.childVariants,
       editable: ReactionCore.hasPermission("createProduct")
     };
+
+    return data;
   },
 
   handleFieldUpdate(event) {
-    console.log(event.target.value);
+    ReactionSimpleProduct.updateProduct(
+      this.data.product._id,
+      event.target.name,
+      event.target.value
+    );
   },
+
+  onTagUpdate(value) {
+
+  },
+
+  handleTagCreate(value) {
+    console.log("create tag, maybe?", value);
+    ReactionSimpleProduct.createTag(this.data.product._id, value);
+  },
+
+  handleTagRemove(tagId) {
+    ReactionSimpleProduct.removeTag(this.data.product._id, tagId);
+    console.log("remove a tag", tagId);
+  },
+
+
+  handleTagUpdate(tagId) {
+    // ReactionSimpleProduct.removeTag(this.data.product._id, value);
+    console.log("remove a tag", tagId);
+  },
+
+  handleTagBookmark(tagId) {
+    // ReactionSimpleProduct.removeTag(this.data.product._id, value);
+    console.log("remove a tag", tagId);
+  },
+
 
   renderMediaGallery() {
 
@@ -37,39 +75,81 @@ ProductDetail = React.createClass({
     return <ProductMedia type="product"></ProductMedia>;
   },
 
+
+
+
+
+  renderTags() {
+    if (this.data.tags) {
+      return (
+        <div className="rui group">
+          <h3>Tags</h3>
+          <Tags
+            tags={this.data.tags}
+            editable={this.data.editable}
+            refocusAfterCreate={true}
+            onTagBookmark={this.handleTagBookmark}
+            onTagCreate={this.handleTagCreate}
+            onTagRemove={this.handleTagRemove}
+            onTagUpdate={this.handleTagUpdate}
+          />
+        </div>
+      );
+    }
+  },
+
+  renderDetails() {
+    if (this.data.product.metafields) {
+      return (
+        <div className="rui details">
+          <h3>Details</h3>
+          <Metadata metafields={this.data.product.metafields} editable={this.data.editable}></Metadata>
+        </div>
+      );
+    }
+  },
+
+
   render() {
-    const product = this.data.product;
-    const editable = this.data.editable;
+    const product = this.data.product || {};
 
     return (
       <div className="rui productDetail" itemScope itemType="http://schema.org/Product">
-
-
         <div className="header">
-          <h1 id="title">
-            <TextField name="title" value={product.title} onBlur={this.handleFieldUpdate}></TextField>
-          </h1>
-          <div className="pageTitle" itemProp="name">
-            <TextField name="pageTitle" value={product.pageTitle}></TextField>
-          </div>
+          <Items autoWrap={true}>
+            <h1 id="title">
+              <TextField
+                align="center"
+                name="title"
+                onBlur={this.handleFieldUpdate}
+                value={product.title}
+              />
+            </h1>
+            <div className="pageTitle" itemProp="name">
+              <TextField
+                align="center"
+                name="pageTitle"
+                onValueChange={this.handleFieldUpdate}
+                value={product.pageTitle}
+              />
+            </div>
+          </Items>
         </div>
 
         <div className="column">
-          {this.renderMediaGallery()}
-
-          <h3>Tags</h3>
-          <Tags tags={this.data.tags} editable={editable}></Tags>
-
-          <h3>Details</h3>
-          <Metadata metafields={product.metafields} editable={editable}></Metadata>
+          <Items autoWrap={true}>
+            {this.renderMediaGallery()}
+            {this.renderTags()}
+            {this.renderDetails()}
+          </Items>
         </div>
 
         <div className="column">
-          <TextField name="pageTitle" value={product.vendor}></TextField>
-
-          <TextField name="description" value={product.description} multiline={true}></TextField>
-
-          <VariantSelector variants={this.data.variants}></VariantSelector>
+          <Items>
+            <TextField name="pageTitle" value={product.vendor} />
+            <TextField multiline={true} name="description" value={product.description} />
+            <VariantSelector variants={this.data.variants} />
+          </Items>
         </div>
       </div>
     );
