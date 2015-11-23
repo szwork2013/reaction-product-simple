@@ -62,11 +62,12 @@ ReactionSimpleProduct = {
 
 
 
-  get tags() {
+  tags() {
     let product = selectedProduct();
     if (product) {
       if (product.hashtags) {
         return _.map(product.hashtags, function (id) {
+          console.log("ID", id);
           return Tags.findOne(id);
         });
       }

@@ -3,22 +3,24 @@
 @import "{reactioncommerce:reaction-ui}/client/styles/rtl.less";
 
 
-.simple-variant {
+.rsp.variant.list {
   display: flex;
-}
-
-.simple-variant:hover {
-  border: 3px solid gray;
+  border-radius: @border-radius-base;
+  border: 1px solid @border-color;
   background-color: @white;
 }
 
-.simple-variant.selected {
-  border: 2px solid @state-active-color;
-  border-radius: @border-radius-large;
-  // background-color: ;
+.rsp.variant.list:hover {
+  border: 1px solid @state-active-color;
+  background-color: @white;
 }
 
-.simple-variant .media {
+.rsp.variant.list.selected {
+  border: 1px solid @state-active-color;
+  border-radius: @border-radius-large;
+}
+
+.rsp.variant.list .media {
   flex: 1 1 auto;
   max-width: 100px;
   padding: 5px;
@@ -28,84 +30,57 @@
   }
 }
 
-.simple-variant .detail {
+.rsp.variant.list .detail {
   flex: 1 1 auto;
   padding: 5px;
 }
 
-.variant-detail{
-  height: 34px;
-  border-radius: @input-border-radius;
-  font-size: 12px;
-  border: 3px solid transparent;
-  margin-top: 8px;
-  background-color: #ff00ff
+.rsp.variant.list {
+
 }
 
 
-.variant-progress-item {
-  border: 0px;
-  position: absolute;
-  padding-left: 10px;
-  padding-right: 10px;
-  width: 100%;
+.rsp.variants.grid {
+  display: flex;
+  flex-wrap: wrap;
+  padding: @padding-base-vertical @padding-base-horizontal;
 }
 
-.variant-qty-sold-out {
-  text-transform:uppercase;
-  border-radius:1px;
+
+.rsp.variant.grid {
+  display: flex;
+  flex: 1 1 auto;
+  max-width: 25%;
+  border-radius: @border-radius-base;
+  border: 1px solid @border-color;
+  background-color: @white;
 }
 
-.variant-table {
-  .edit, .buy {
-    .text-align(right);
-  }
+.rsp.variant.grid:hover {
+  border: 1px solid @state-active-color;
+  background-color: @white;
 }
 
-.variant-title {
-  position: absolute;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: clip;
-  display: inline-block;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  .margin-left(5px);
-  line-height: 28px;
-  font-weight: 400;
-  color: @btn-default-color;
-  width: 80%;
+.rsp.variant.grid.selected {
+  border: 1px solid @state-active-color;
+  border-radius: @border-radius-large;
 }
 
-.variant-price {
-  display: inline-block;
-  .margin-left(10px);
-  font-size: medium;
-  font-weight: 500;
-  line-height: 30px;
-  color: @btn-default-color;
-  position: absolute;
-  .right(10px);
-}
-
-.variant-edit {
-  background-color: @black;
-  color: @link-color;
-  position: absolute;
-  border-radius: @input-border-radius;
-  .right(0);
+.rsp.variant.grid .media {
+  flex: 1 1 auto;
   padding: 5px;
-}
-.variant-product-options {
-  padding: 6px;
-  border: 1px solid @gray-lighter;
-  border-radius: @list-group-border-radius;
-  margin: 2px 0px 8px 0px;
+
+  img {
+    width: 100%;
+  }
 }
 
-@media only screen and (max-width: @screen-sm-max) {
-  .variant-title {
-    letter-spacing: 0em;
-    width: 70%;
-  }
+.rsp.variant.grid .detail {
+  flex: 1 1 auto;
+  padding: 5px;
+  display: none;
+}
+
+.rsp.variant.grid {
+
 }

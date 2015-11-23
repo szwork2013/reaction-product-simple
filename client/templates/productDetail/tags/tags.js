@@ -95,6 +95,7 @@ Template.productTagInputForm.onRendered(function () {
           hashtagsList.push(tag);
         }
       }
+
       return Meteor.call("products/updateProductField",
         selectedProductId(), "hashtags", _.uniq(hashtagsList));
     }

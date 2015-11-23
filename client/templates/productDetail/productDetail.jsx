@@ -2,11 +2,15 @@
 // import React from "react"
 // import TextField from "reaction-ui/textfield"
 // TODO: For now lets pretend we have to do imports
+const Item = ReactionUI.Components.Item;
+const Items = ReactionUI.Components.Items;
+const Media = ReactionUI.Components.Media;
+const Metadata = ReactionUI.Components.Metadata;
 const Tags = ReactionUI.Components.Tags;
 const TextField = ReactionUI.Components.TextField;
-const Items = ReactionUI.Components.Items;
+const Seperator = ReactionUI.Components.Seperator;
 const VariantSelector = ReactionProductSimple.Components.VariantSelector;
-console.log("Variant Selector");
+
 ProductDetail = React.createClass({
   displayName: "Product Detail - Simple",
 
@@ -19,7 +23,7 @@ ProductDetail = React.createClass({
     data = {
       isLoadingProduct: handle.ready(),
       product: selectedProduct(),
-      tags: ReactionSimpleProduct.tags,
+      tags: ReactionSimpleProduct.tags(),
       media: ReactionCore.Media.getProductMedia(),
       variants: ReactionSimpleProduct.variants,
       childVariants: ReactionSimpleProduct.childVariants,
@@ -39,6 +43,11 @@ ProductDetail = React.createClass({
 
   onTagUpdate(value) {
 
+  },
+
+  handleTagSort(newTagOrder) {
+    Meteor.call("products/updateProductField",
+      selectedProductId(), "hashtags", _.uniq(newTagOrder));
   },
 
   handleTagCreate(value) {
@@ -67,12 +76,11 @@ ProductDetail = React.createClass({
 
     if (this.data.media.length) {
       return this.data.media.map((image, index) => {
-        console.log(image);
         return <ProductMedia key={index} type="product" media={image}></ProductMedia>;
       });
     }
 
-    return <ProductMedia type="product"></ProductMedia>;
+    return <Media type="product"></Media>;
   },
 
 
@@ -81,6 +89,7 @@ ProductDetail = React.createClass({
 
   renderTags() {
     if (this.data.tags) {
+      console.log("1st tag", this.data.tags[0]._id);
       return (
         <div className="rui group">
           <h3>Tags</h3>
@@ -92,6 +101,7 @@ ProductDetail = React.createClass({
             onTagCreate={this.handleTagCreate}
             onTagRemove={this.handleTagRemove}
             onTagUpdate={this.handleTagUpdate}
+            onTagSort={this.handleTagSort}
           />
         </div>
       );
@@ -103,7 +113,10 @@ ProductDetail = React.createClass({
       return (
         <div className="rui details">
           <h3>Details</h3>
-          <Metadata metafields={this.data.product.metafields} editable={this.data.editable}></Metadata>
+          <Metadata
+            editable={this.data.editable}
+            metafields={this.data.product.metafields}
+          />
         </div>
       );
     }
@@ -114,44 +127,98 @@ ProductDetail = React.createClass({
     const product = this.data.product || {};
 
     return (
-      <div className="rui productDetail" itemScope itemType="http://schema.org/Product">
-        <div className="header">
-          <Items autoWrap={true}>
-            <h1 id="title">
-              <TextField
-                align="center"
-                name="title"
-                onBlur={this.handleFieldUpdate}
-                value={product.title}
-              />
-            </h1>
-            <div className="pageTitle" itemProp="name">
-              <TextField
-                align="center"
-                name="pageTitle"
-                onValueChange={this.handleFieldUpdate}
-                value={product.pageTitle}
-              />
+      <div className="rui productDetail" itemScope={true} itemType="http://schema.org/Product">
+        <Items>
+          <Item size="full">
+            <div className="header">
+              <Items autoWrap={true} static={true}>
+                <h1 id="title">
+                  <TextField
+                    align="center"
+                    name="title"
+                    onBlur={this.handleFieldUpdate}
+                    value={product.title}
+                  />
+                </h1>
+                <div className="pageTitle" itemProp="name">
+                  <TextField
+                    align="center"
+                    name="pageTitle"
+                    onValueChange={this.handleFieldUpdate}
+                    value={product.pageTitle}
+                  />
+                </div>
+              </Items>
             </div>
-          </Items>
-        </div>
+          </Item>
 
-        <div className="column">
-          <Items autoWrap={true}>
-            {this.renderMediaGallery()}
-            {this.renderTags()}
-            {this.renderDetails()}
-          </Items>
-        </div>
+          <Item size="half">
+            <Items autoWrap={true} static={true}>
+              {this.renderMediaGallery()}
+              {this.renderTags()}
+              {this.renderDetails()}
+            </Items>
+          </Item>
 
-        <div className="column">
-          <Items>
-            <TextField name="pageTitle" value={product.vendor} />
-            <TextField multiline={true} name="description" value={product.description} />
-            <VariantSelector variants={this.data.variants} />
-          </Items>
-        </div>
+          <Item size="half">
+            <Items autoWrap={true} static={true}>
+              <TextField name="pageTitle" value={product.vendor} />
+              <TextField multiline={true} name="description" value={product.description} />
+              <Seperator label="options"/>
+              <VariantSelector editable={this.props.editable} variants={this.data.variants} />
+              <Seperator label="more options"/>
+              <VariantSelector variants={this.data.childVariants} />
+            </Items>
+          </Item>
+        </Items>
       </div>
     );
   }
 });
+
+/*
+<Items>
+  <Item size="full">
+    <div className="header">
+      <Items autoWrap={true} static={true}>
+        <h1 id="title">
+          <TextField
+            align="center"
+            name="title"
+            onBlur={this.handleFieldUpdate}
+            value={product.title}
+          />
+        </h1>
+        <div className="pageTitle" itemProp="name">
+          <TextField
+            align="center"
+            name="pageTitle"
+            onValueChange={this.handleFieldUpdate}
+            value={product.pageTitle}
+          />
+        </div>
+      </Items>
+    </div>
+  </Item>
+
+  <Item size="half">
+    <Items autoWrap={true} static={true}>
+      {this.renderMediaGallery()}
+      {this.renderTags()}
+      {this.renderDetails()}
+    </Items>
+  </Item>
+
+  <Item size="half">
+    <Items autoWrap={true} static={true}>
+      <TextField name="pageTitle" value={product.vendor} />
+      <TextField multiline={true} name="description" value={product.description} />
+      <Seperator label="options"/>
+      <VariantSelector editable={this.props.editable} variants={this.data.variants} />
+      <Seperator label="more options"/>
+      <VariantSelector variants={this.data.childVariants} />
+    </Items>
+  </Item>
+</Items>
+
+ */

@@ -1,3 +1,7 @@
+const classnames = ReactionUI.Lib.classnames;
+const Button = ReactionUI.Components.Button;
+const ButtonGroup = ReactionUI.Components.ButtonGroup;
+const Items = ReactionUI.Components.Items;
 
 Variant = class SimpleVariant extends React.Component {
 
@@ -42,13 +46,34 @@ Variant = class SimpleVariant extends React.Component {
     }
   }
 
+  renderEditControls() {
+    if (this.props.editable) {
+      return (
+        <ButtonGroup direction="vertical">
+          <Button icon="arrows" />
+          <Button icon="pencil" />
+          <Button icon="trash-o" />
+        </ButtonGroup>
+      )
+    }
+  }
+  // <button className="edit hidden-xs" onClick={this.onClickEdit}>
+  //   <i className="fa fa-pencil fa-lg" data-id="{this.props.variant._id}"></i>
+  // </button>
+
   /**
    * Render Component
    * @return {JSX} component template
    */
   render() {
+    const classes = classnames({
+      rsp: true,
+      variant: true,
+
+      [`${this.props.layout}`]: true
+    })
     return (
-      <div className="simple-variant {selectedVariant}">
+      <div className={classes}>
         <div className="media">
           <img src="/resources/placeholder.gif" />
         </div>
@@ -57,11 +82,9 @@ Variant = class SimpleVariant extends React.Component {
           <div className="detail-price">{this.props.variant.displayPrice}</div>
           <div className="detail-stock">
             {this.renderBadge()}
-            <button className="edit hidden-xs" onClick={this.onClickEdit}>
-              <i className="fa fa-pencil fa-lg" data-id="{this.props.variant._id}"></i>
-            </button>
           </div>
         </div>
+        {this.renderEditControls()}
       </div>
     );
   }
